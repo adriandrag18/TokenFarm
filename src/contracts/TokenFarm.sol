@@ -25,19 +25,15 @@ contract TokenFarm {
     // Stake
     function stakeTokens(uint _amount) public {
         require(_amount > 0, 'amount can not be 0');
-        // Trasnfer Mock Dai tokens to this contract for staking
         daiToken.transferFrom(msg.sender, address(this), _amount);
 
-        // Update staking balance
         stakingBalance[msg.sender] = stakingBalance[msg.sender] + _amount;
 
-        // Add user to stakers array *only* if they haven't staked already
         if(!hasStaked[msg.sender]) {
             stakers.push(msg.sender);
             hasStaked[msg.sender] = true;
         }
 
-        // Update staking status
         isStaking[msg.sender] = true;
     }
 
